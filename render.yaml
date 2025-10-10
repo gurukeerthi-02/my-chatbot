@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: chatbot-backend
+    env: java
+    buildCommand: mvn clean package -DskipTests
+    startCommand: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/*.jar
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+  - type: pserv
+    name: chatbot-db
+    env: docker
+    plan: free
